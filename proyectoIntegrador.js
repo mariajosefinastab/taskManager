@@ -1,3 +1,6 @@
+const prompt = require("prompt-sync")({sigint:true});
+
+
 //Array tareas
 
 let tareas = [];
@@ -62,3 +65,51 @@ function mostrarMenu(){
     console.log("5. Mostrar todas las tareas");
     console.log("0. Salir");
 }
+
+
+//Interactuar con el usuario
+
+function interactuarConUsuario(){
+    let opcion = -1;
+
+    while(opcion != 0){ //Si opción es distinto a 0 el usuario todavía quiere interactuar
+        mostrarMenu();
+        opcion = parseInt(prompt("Ingrese la opción deseada:"));
+    }
+
+    switch (opcion) {
+        case 1:
+            let nombreTareaNueva = prompt("Ingrese el nombre de la tarea a cargar: ");
+            agregarTarea(nombreTareaNueva);
+            break;
+    
+        case 2:
+            let indiceAEliminar = parseInt(prompt("Ingrese el índice de la tarea a eliminar: "));
+            eliminarTarea(indiceAEliminar);
+            break;
+
+        case 3:
+            let indiceACompletar = parseInt(prompt("Ingrese el índice de la tarea a completar: "));
+            completarTarea(indiceACompletar);
+            break;
+
+
+        case 4:
+            let indice = parseInt(prompt("Ingrese el índice de la tarea a modificar: "));
+            let nuevoNombre = prompt("Ingrese el nuevo nombre de su tarea: ");
+            modificarTarea(indice, nuevoNombre);
+            break;
+
+        case 4:
+            console.log("Lista de tareas: ");
+            console.log(tareas);
+            break;
+
+        default:
+            console.log("Opción inválida");
+            break;
+    }
+}
+
+
+interactuarConUsuario();
