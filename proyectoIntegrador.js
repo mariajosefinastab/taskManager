@@ -34,3 +34,31 @@ function completarTarea(indice){
         console.log("Índice de tarea inexistente");
     }
 }
+
+//Modificar una tarea
+
+function modificarTarea(indice, nuevoNombre, nuevaFechaLimite = null){
+
+    if(indice >= 0 && indice < tareas.length){
+        tareas[indice].nombre = nuevoNombre; //Dentro del array tareas ingresa a una posición específica [indice] y a la propiedad de ese objeto .propiedad
+        if(nuevaFechaLimite !== null){
+            tareas[indice].fechaLimite = nuevaFechaLimite;
+        }
+
+        console.log("Tarea modificada con éxito");
+    } else {
+        console.log("Índice de tarea inexistente");
+    }
+}
+
+//mostrar menú de opciones
+
+function mostrarMenu(){
+    console.log("Menu");
+    console.log("1. Agregar tarea");
+    console.log("2. Eliminar tarea");
+    console.log("3. Marcar tarea como completada");
+    console.log("4. Modificar una tarea");
+    console.log("5. Mostrar todas las tareas");
+    console.log("0. Salir");
+}
