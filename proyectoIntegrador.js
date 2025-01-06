@@ -12,6 +12,7 @@ function agregarTarea(nombreRecibido, fechaLimiteRecibida = null){
                  completada : false, //Redundante si pongo true ya que si la est´cargando es xq está false
                  fechaLimite : fechaLimiteRecibida                
     });  //objeto
+    console.log("Tarea agregada correctaemnte!");
 }
 
 //Eliminar tarea
@@ -75,7 +76,7 @@ function interactuarConUsuario(){
     while(opcion != 0){ //Si opción es distinto a 0 el usuario todavía quiere interactuar
         mostrarMenu();
         opcion = parseInt(prompt("Ingrese la opción deseada:"));
-    }
+    
 
     switch (opcion) {
         case 1:
@@ -111,5 +112,6 @@ function interactuarConUsuario(){
     }
 }
 
+}
 
 interactuarConUsuario();
