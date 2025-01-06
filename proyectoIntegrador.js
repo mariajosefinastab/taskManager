@@ -4,6 +4,26 @@ const prompt = require("prompt-sync")({sigint:true});
 //Array tareas
 
 let tareas = [];
+let categriasNombres = [//Matríz
+    "Trabajo",
+    "Personal", //Agregar ,ás categorías si es necesario
+]; 
+
+//Muestra categorías
+
+function mostrarTodasLasCategorias(){
+    console.log("Categorías existentes: ");
+    categriasNombres.forEach(function(categoria, indice){ //Callback
+        console.log(indice + ": " + categoria);
+    });
+}
+
+//Cargar nuevas categorías por el Usuario
+
+function agregarNuevaCategoriaPorElUsuario(nombreCategoria){
+    categoriasNombres.push(nombreCategoria); //Agrega al final del array la información que recibe por parámetro
+    console.log("Categoría " + nombreCategoria + " agregada correctamente!");
+}
 
 //Agregar tarea al array
 
@@ -64,6 +84,8 @@ function mostrarMenu(){
     console.log("3. Marcar tarea como completada");
     console.log("4. Modificar una tarea");
     console.log("5. Mostrar todas las tareas");
+    console.log("6. Ver todas las categorías");
+    console.log("7. Agregar una nueva categoría");
     console.log("0. Salir");
 }
 
@@ -78,39 +100,48 @@ function interactuarConUsuario(){
         opcion = parseInt(prompt("Ingrese la opción deseada:"));
     
 
-    switch (opcion) {
-        case 1:
-            let nombreTareaNueva = prompt("Ingrese el nombre de la tarea a cargar: ");
-            agregarTarea(nombreTareaNueva);
-            break;
-    
-        case 2:
-            let indiceAEliminar = parseInt(prompt("Ingrese el índice de la tarea a eliminar: "));
-            eliminarTarea(indiceAEliminar);
-            break;
+        switch (opcion) {
+            case 1:
+                let nombreTareaNueva = prompt("Ingrese el nombre de la tarea a cargar: ");
+                agregarTarea(nombreTareaNueva);
+                break;
+        
+            case 2:
+                let indiceAEliminar = parseInt(prompt("Ingrese el índice de la tarea a eliminar: "));
+                eliminarTarea(indiceAEliminar);
+                break;
 
-        case 3:
-            let indiceACompletar = parseInt(prompt("Ingrese el índice de la tarea a completar: "));
-            completarTarea(indiceACompletar);
-            break;
+            case 3:
+                let indiceACompletar = parseInt(prompt("Ingrese el índice de la tarea a completar: "));
+                completarTarea(indiceACompletar);
+                break;
 
 
-        case 4:
-            let indice = parseInt(prompt("Ingrese el índice de la tarea a modificar: "));
-            let nuevoNombre = prompt("Ingrese el nuevo nombre de su tarea: ");
-            modificarTarea(indice, nuevoNombre);
-            break;
+            case 4:
+                let indice = parseInt(prompt("Ingrese el índice de la tarea a modificar: "));
+                let nuevoNombre = prompt("Ingrese el nuevo nombre de su tarea: ");
+                modificarTarea(indice, nuevoNombre);
+                break;
 
-        case 4:
-            console.log("Lista de tareas: ");
-            console.log(tareas);
-            break;
+            case 5:
+                console.log("Lista de tareas: ");
+                console.log(tareas);
+                break;
+            
+            case 6:
+                mostrarTodasLasCategorias();
+                break;
+            
+            case 7:
+                let nuevaCategoria = prompt("Ingrese el nombre de la nueva categoría: ");
+                agregarNuevaCategoriaPorElUsuario(nuevaCategoria);
+                break;
 
-        default:
-            console.log("Opción inválida");
-            break;
+            default:
+                console.log("Opción inválida");
+                break;
+        }
     }
-}
 
 }
 
