@@ -4,7 +4,7 @@ const prompt = require("prompt-sync")({sigint:true});
 //Array tareas
 
 let tareas = [];
-let categriasNombres = [//Matríz
+let categoriasNombres = [//Matríz
     "Trabajo",
     "Personal", //Agregar ,ás categorías si es necesario
 ]; 
@@ -13,7 +13,7 @@ let categriasNombres = [//Matríz
 
 function mostrarTodasLasCategorias(){
     console.log("Categorías existentes: ");
-    categriasNombres.forEach(function(categoria, indice){ //Callback
+    categoriasNombres.forEach(function(categoria, indice){ //Callback
         console.log(indice + ": " + categoria);
     });
 }
@@ -28,12 +28,26 @@ function agregarNuevaCategoriaPorElUsuario(nombreCategoria){
 //Agregar tarea al array
 
 function agregarTarea(nombreRecibido, fechaLimiteRecibida = null){
-    tareas.push({nombre: nombreRecibido,
-                 completada : false, //Redundante si pongo true ya que si la est´cargando es xq está false
-                 fechaLimite : fechaLimiteRecibida                
-    });  //objeto
+
+    mostrarTodasLasCategorias();
+
+    let numeroCategoria = parseInt(prompt("Ingrese el numero de la categoria: "));
+
+    if(numeroCategoria >= 0 && numeroCategoria < categoriasNombres.length){
+
+        tareas.push({nombre: nombreRecibido,
+            completada : false, //Redundante si pongo true ya que si la est´cargando es xq está false
+            fechaLimite : fechaLimiteRecibida,
+            categoria : numeroCategoria});  //objeto             
+                                        
     console.log("Tarea agregada correctaemnte!");
+
+    } else {
+        console.log("Número de categoría incorrecto");
+    }
 }
+
+
 
 //Eliminar tarea
 
@@ -61,15 +75,18 @@ function completarTarea(indice){
 
 //Modificar una tarea
 
-function modificarTarea(indice, nuevoNombre, nuevaFechaLimite = null){
+function modificarTarea(indice, nuevoNombre, nuevaFechaLimite = null, nuevoNumeroDeCategoria){
 
     if(indice >= 0 && indice < tareas.length){
-        tareas[indice].nombre = nuevoNombre; //Dentro del array tareas ingresa a una posición específica [indice] y a la propiedad de ese objeto .propiedad
+        tareas[indice].nombre = nuevoNombre !== undefined ? nuevoNombre : tareas[indice].nombre; //undefined por defecto, si llega algo lo cargo
+        tareas[indice].fechaLimite = nuevaFechaLimite !== undefined ? nuevaFechaLimite : tareas[indice].fechaLimite;
+        tareas[indice].categoria = nuevoNumeroDeCategoria !== undefined ? nuevoNumeroDeCategoria : tareas[indice].categoria;
+        console.log("Modificación correcta");
+/*         tareas[indice].nombre = nuevoNombre; //Dentro del array tareas ingresa a una posición específica [indice] y a la propiedad de ese objeto .propiedad
         if(nuevaFechaLimite !== null){
             tareas[indice].fechaLimite = nuevaFechaLimite;
         }
-
-        console.log("Tarea modificada con éxito");
+        console.log("Tarea modificada con éxito"); */
     } else {
         console.log("Índice de tarea inexistente");
     }
@@ -119,8 +136,35 @@ function interactuarConUsuario(){
 
             case 4:
                 let indice = parseInt(prompt("Ingrese el índice de la tarea a modificar: "));
-                let nuevoNombre = prompt("Ingrese el nuevo nombre de su tarea: ");
-                modificarTarea(indice, nuevoNombre);
+                
+                if(indice >= 0 && indice < tareas.length){
+
+                    let opcion = parseInt(prompt("¿Que propiedad desea modificar? 1. Nombre 2. Fecha Límite 3. Número de Categoría"));
+                    switch (opcion) {
+                        case 1:
+                            let nuevoNombre = ("Ingrese el nuevo nombre de su tarea:");
+                            modificarTarea(indice, nuevoNombre);
+                            break;
+                        case 2:
+                            let nuevaFechaLimite = prompt("Ingrese nueva fecha límite para su tarea: ");
+                            modificarTarea(indice, undefined, nuevaFechaLimite);
+                            break;
+                        case 3:
+                            let nuevoNumDeCategoria = parseInt(promt("Ingrese nuevo número de categoría: "));
+                            if(nuevoNumDeCategoria >= 0 && nuevoNumDeCategoria < categoriasNombres.length){
+                                modificarTarea(indice, undefined, undefined, nuevoNumDeCategoria); //undefined porque no quiero cambiar el nombre y undefined porque no quiero cambiar la fecha
+                            }
+
+                            break;
+                    
+                        default:
+                            break;
+                    }
+
+                } else {
+                    console.log("índice de tarea incorrecto!")
+                }
+
                 break;
 
             case 5:
