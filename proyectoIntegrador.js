@@ -92,7 +92,36 @@ function modificarTarea(indice, nuevoNombre, nuevaFechaLimite = null, nuevoNumer
     }
 }
 
-//mostrar menú de opciones
+//Filtrar tareas por categoría
+
+function filtrarTareasPorCategoria(numeroCategoria){
+    //opcion1: recorrer array tareas con for y con if consultar si el objeto al que se accedió tiene una propiedad llamada categoria que coincide a el valor que se pasó por parámetro
+    //opción2: Métodos de Arrays: .filter()
+
+    let tareasFiltradas = tareas.filter(function(tarea){ //Callback: tarea, objeto del array principal
+        return tarea.categoria === numeroCategoria;
+    });
+    return tareasFiltradas;
+}
+
+//Elegir una categoría y notificarle cuántas tareas tiene completadas sobre el total
+
+function contarTareasCompletadasPorCategoria(numeroCategoria){
+    let tareasCategoria = filtrarTareasPorCategoria(numeroCategoria); //Capturo array de la función anterior
+    //Objetivo: Filtrar y recorrer el nuevo array tareasCategoria e ir acumulando cuantas tareas tengo cargadas ahí cuya propiedad llamada completada tiene un valor == true
+
+    let tareasCompletadas = tareasCategoria.reduce(function(contador, tarea){
+        return tarea.completada ? contador + 1 : contador; //retorno aquello cuya propiedad completada = true, si esto es así le sumo 1 a contador, de lo contrario contador queda como está
+
+    }, 0);
+
+    let tareasEnTotal = tareasCategoria.length;
+
+    console.log("Tareas completadas de la categoría " + numeroCategoria + ": " + tareasCompletadas + " de " + tareasEnTotal + " tareas!");
+}
+
+
+//Mostrar menú de opciones
 
 function mostrarMenu(){
     console.log("Menu");
@@ -103,6 +132,8 @@ function mostrarMenu(){
     console.log("5. Mostrar todas las tareas");
     console.log("6. Ver todas las categorías");
     console.log("7. Agregar una nueva categoría");
+    console.log("8. Filtrar tareas por categoría");
+    console.log("9. Visualizar cantidad de tareas completadas por categoría");
     console.log("0. Salir");
 }
 
@@ -154,9 +185,7 @@ function interactuarConUsuario(){
                             if(nuevoNumDeCategoria >= 0 && nuevoNumDeCategoria < categoriasNombres.length){
                                 modificarTarea(indice, undefined, undefined, nuevoNumDeCategoria); //undefined porque no quiero cambiar el nombre y undefined porque no quiero cambiar la fecha
                             }
-
                             break;
-                    
                         default:
                             break;
                     }
@@ -181,6 +210,21 @@ function interactuarConUsuario(){
                 agregarNuevaCategoriaPorElUsuario(nuevaCategoria);
                 break;
 
+
+            case 8:
+                mostrarTodasLasCategorias();
+                let nroCategoria = parseInt(prompt("Ingrese el número de la categoría a filtrar: "));
+                let tareasCategoria = filtrarTareasPorCategoria(nroCategoria); //captura array retornado en tareasCategoria
+
+                console.log("Tareas de la categoría seleccionada: ");
+                console.log(tareasCategoria);
+                break;
+
+            case 9:
+                mostrarTodasLasCategorias();
+                let nroCateg = parseInt(prompt("Ingrese el número de la categoría a visualizar: "));
+                contarTareasCompletadasPorCategoria(nroCateg);
+                break;
             default:
                 console.log("Opción inválida");
                 break;
