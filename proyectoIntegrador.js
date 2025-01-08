@@ -120,6 +120,17 @@ function contarTareasCompletadasPorCategoria(numeroCategoria){
     console.log("Tareas completadas de la categoría " + numeroCategoria + ": " + tareasCompletadas + " de " + tareasEnTotal + " tareas!");
 }
 
+//Mostrar todas las tareas no completadas
+
+function mostrarTraeasNoCompletadas(){
+    console.log("Tareas no completadas: ");
+    tareas.forEach(function(tarea){
+        if(!tarea.completada){
+            console.log("- Nombre: " + tarea.nombre + ", Categoría: " + categoriasNombres[tarea.categoria]);
+        }
+    });
+}
+
 
 //Mostrar menú de opciones
 
@@ -134,6 +145,7 @@ function mostrarMenu(){
     console.log("7. Agregar una nueva categoría");
     console.log("8. Filtrar tareas por categoría");
     console.log("9. Visualizar cantidad de tareas completadas por categoría");
+    console.log("10. Visualizar tareas no completadas");
     console.log("0. Salir");
 }
 
@@ -223,8 +235,13 @@ function interactuarConUsuario(){
             case 9:
                 mostrarTodasLasCategorias();
                 let nroCateg = parseInt(prompt("Ingrese el número de la categoría a visualizar: "));
-                contarTareasCompletadasPorCategoria(nroCateg);
+                let contarTareasCompletadasPorCategoria(nroCateg);
                 break;
+            
+            case 10:
+                mostrarTraeasNoCompletadas();
+                break;
+            
             default:
                 console.log("Opción inválida");
                 break;
