@@ -136,21 +136,45 @@ function mostrarTraeasNoCompletadas(){
 function ordenarTareasPorNombre(){
     let total = tareas.length;
 
-for(let j = 0 ; j < total ; j++){
+    for(let j = 0 ; j < total ; j++){
 
-    for(let i = 0; i < total ; i++){
-        if(tareas[i].nombre > tareas[i+1].nombre){
+        for(let i = 0; i < total - 1 ; i++){
+            if(tareas[i].nombre > tareas[i+1].nombre){
 
-            let temp = tareas[i]; //arreglo tareas, posición i, totalidad del objeto
-            tareas[i] = tareas[i+1];
-            tareas[i+1] = temp;
+                let temp = tareas[i]; //arreglo tareas, posición i, totalidad del objeto
+                tareas[i] = tareas[i+1];
+                tareas[i+1] = temp;
 
+                }
             }
-        }
 
-    }
+        }
  
 }
+
+//Ordenar  tareas por la propiedad "fechaLimite" con bubbleSort
+
+function ordenarTareasPorFechaLimite(){
+    let total = tareas.length;
+
+    for(let j = 0 ; j < total ; j++){
+
+        for(let i = 0; i < total - 1 ; i++){
+            if(tareas[i].fechaLimite > tareas[i+1].fechaLimite){
+
+                let temp = tareas[i]; //arreglo tareas, posición i, totalidad del objeto
+                tareas[i] = tareas[i+1];
+                tareas[i+1] = temp;
+
+                }
+            }
+
+        }
+ 
+}
+
+
+
 
 
 //Mostrar menú de opciones
@@ -167,6 +191,8 @@ function mostrarMenu(){
     console.log("8. Filtrar tareas por categoría");
     console.log("9. Visualizar cantidad de tareas completadas por categoría");
     console.log("10. Visualizar tareas no completadas");
+    console.log("11. Ordenar tareas alfabéticamente");
+    console.log("12. Ordenar tareas por fecha límite");
     console.log("0. Salir");
 }
 
@@ -261,6 +287,18 @@ function interactuarConUsuario(){
             
             case 10:
                 mostrarTraeasNoCompletadas();
+                break;
+
+            case 11:
+                ordenarTareasPorNombre();
+                console.log("Tareas por nombre: ");
+                console.log(tareas);
+                break;
+            
+            case 12:
+                ordenarTareasPorFechaLimite();
+                console.log("Tareas por fecha: ");
+                console.log(tareas);
                 break;
             
             default:
