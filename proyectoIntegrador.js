@@ -131,6 +131,27 @@ function mostrarTraeasNoCompletadas(){
     });
 }
 
+//Ordenar  tareas por la propiedad "nombre" con bubbleSort
+
+function ordenarTareasPorNombre(){
+    let total = tareas.length;
+
+for(let j = 0 ; j < total ; j++){
+
+    for(let i = 0; i < total ; i++){
+        if(tareas[i].nombre > tareas[i+1].nombre){
+
+            let temp = tareas[i]; //arreglo tareas, posición i, totalidad del objeto
+            tareas[i] = tareas[i+1];
+            tareas[i+1] = temp;
+
+            }
+        }
+
+    }
+ 
+}
+
 
 //Mostrar menú de opciones
 
