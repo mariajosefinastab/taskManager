@@ -174,6 +174,31 @@ function ordenarTareasPorFechaLimite(){
 }
 
 
+//Buscador  de tarea por nombre y retorna su índice/posición
+
+function buscarTareaPorNombre(nombreTarea){
+    //Búsqueda binaria
+
+    let inicio = 0;
+    let fin = tareas.length -1;
+
+    while (inicio <= fin) { 
+        
+        let posicionElementoMedio = Math.round((inicio + fin) / 2);
+
+        if(tareas[posicionElementoMedio].nombre === nombreTarea){
+            return posicionElementoMedio;
+        } else if(tareas[posicionElementoMedio].nombre < nombreTarea){
+            inicio = posicionElementoMedio + 1;
+        }else{
+            fin = posicionElementoMedio - 1;
+        }
+    }
+
+    return - 1;
+}
+
+
 
 
 
@@ -193,6 +218,7 @@ function mostrarMenu(){
     console.log("10. Visualizar tareas no completadas");
     console.log("11. Ordenar tareas alfabéticamente");
     console.log("12. Ordenar tareas por fecha límite");
+    console.log("13. Buscar tarea por nombre");
     console.log("0. Salir");
 }
 
@@ -301,6 +327,19 @@ function interactuarConUsuario(){
                 console.log(tareas);
                 break;
             
+            case 13:
+                ordenarTareasPorNombre();
+                
+                let nombreABuscar = prompt("Ingrese nombre de la tarea a buscar: ");
+                let indiceTareaEncontrada = buscarTareaPorNombre(nombreABuscar);
+
+                if(indiceTareaEncontrada !== -1){
+                    console.log("Tarea encontrada en el índice: " + indiceTareaEncontrada);
+                }else{
+                    console.log("Tarea no encontrada");
+                }
+                break;
+
             default:
                 console.log("Opción inválida");
                 break;
